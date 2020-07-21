@@ -1,0 +1,61 @@
+const defaultText = ` # This is a header.
+
+## This is a sub-header.
+
+**Visit** [freecodecamp.org](https://freecodecamp.org)**.**
+
+\`console.log('This is an inline code.');\`
+
+\`\`\`
+const greeting = "Hello";
+const name = "Ryan";
+
+const printGreeting - () => {console.log(greeting + ' ' + name)};
+\`\`\`
+
+- list item 1
+- list item 2
+- list item 3
+
+> This is a blockquote.
+![React Logo w/ Text](https://goo.gl/Umyytc)
+
+**This is a bolded text.**
+
+`;
+class App extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      text: defaultText
+    }
+    this.handleChange = this.handleChange.bind(this);
+  }
+  
+  handleChange = (event) => {
+    this.setState({
+      text: event.target.value
+    });
+  };
+  render() {
+    const {text} = this.state;
+    
+    return (
+      <div className="container">
+        <h1 className="text-center text-warning">Markdown Previewer</h1>
+        <div className="row">
+          <div className="col-sm-6">
+            <p className="text-light lead my-4">Editor</p>
+            <textarea className="rounded" id="editor" value={text} onChange={this.handleChange} />
+          </div>
+          <div className="col-sm-6">
+            <p className="text-light lead my-4">Previewer</p>
+            <div className="bg-white rounded" id="preview" dangerouslySetInnerHTML={{__html: marked(text, {breaks: true})}}></div>
+          </div>
+        </div>  
+      </div>
+    );
+  }
+}
+
+ReactDOM.render(<App />, document.querySelector('#app'));
